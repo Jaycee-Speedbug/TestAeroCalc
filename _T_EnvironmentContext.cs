@@ -1,6 +1,8 @@
 using NUnit.Framework;
+using NUnit;
 using CLTool;
 using AeroCalcCore;
+
 
 
 namespace TestAeroCalc
@@ -8,10 +10,13 @@ namespace TestAeroCalc
     [TestFixture]
     public class _T_EnvironmentContext
     {
+
+        private EnvironmentContext EnvCtxt;
+
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
-            EnvironementContext EC = new EnvironementContext("nothing.xml");
+            EnvCtxt = new EnvironmentContext("nothing.xml");
         }
 
         [Test]
@@ -19,6 +24,7 @@ namespace TestAeroCalc
         {
             
             Assert.Pass();
+            
         }
     }
 }
