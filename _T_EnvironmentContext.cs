@@ -1,6 +1,4 @@
 using NUnit.Framework;
-using NUnit;
-using CLTool;
 using AeroCalcCore;
 
 
@@ -16,15 +14,27 @@ namespace TestAeroCalc
         [SetUp]
         public void SetUp()
         {
-            EnvCtxt = new EnvironmentContext("nothing.xml");
+            EnvCtxt = new EnvironmentContext();
+
         }
 
         [Test]
         public void Test1()
         {
-            
-            Assert.Pass();
+            Assert.Pass("It's OK!");
+        }
+
+        [Test]
+        public void loadConfigFile()
+        {
+            EnvCtxt.loadConfigFile("");
+            Assert.AreEqual((double)EnvCtxt.status, (double)FileIO.FILEOP_INVALID_PATH);
+
+            EnvCtxt.loadConfigFile("config/config.xml");
+            Assert.AreEqual(EnvCtxt.status, FileIO.FILEOP_SUCCESSFUL);
             
         }
+
     }
+
 }
