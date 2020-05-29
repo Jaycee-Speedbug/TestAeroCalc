@@ -9,9 +9,9 @@ using System.Collections.Generic;
 namespace TestAeroCalc
 {
 
-
+    /// Test de fonctions de différents objets UnitsXMLFile et UnitsCSVFile
     [TestFixture]
-    public class _T_XMLFile
+    public class _T_UnitsFile
     {
 
         [SetUp]
@@ -24,13 +24,13 @@ namespace TestAeroCalc
 
 
         [Test]
-        public void _T_SaveUnits()
+        public void _T_LoadCSV_SaveXML()
         {
 
             // Création du dictionnaire
 
-            UnitsFile uf = new UnitsFile();
-            Units ud = uf.readFile(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "UnitsDictionary.csv");
+            UnitsCSVFile uf = new UnitsCSVFile();
+            Units ud = uf.getUnitsFromCSV(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "UnitsDictionary.csv");
             List<Unit> lu = ud.getUnits();
             Assert.IsTrue(lu.Count > 0);
             foreach (Unit u in lu)
@@ -38,7 +38,8 @@ namespace TestAeroCalc
                 System.Console.WriteLine(u.ToString());
             }
 
-            XMLFile xmlFile = new XMLFile();
+            //XMLFile xmlFile = new XMLFile();
+            UnitsXMLFile xmlFile = new UnitsXMLFile("");
             //xmlFile.setOutputFileAbsolutePath(AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
             xmlFile.saveUnitDictionaryToXML(ud, AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
 
