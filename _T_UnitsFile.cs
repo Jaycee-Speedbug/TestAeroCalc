@@ -9,17 +9,19 @@ using System.Collections.Generic;
 namespace TestAeroCalc
 {
 
+
     /// Test de fonctions de différents objets UnitsXMLFile et UnitsCSVFile
     [TestFixture]
     public class _T_UnitsFile
     {
+
+
 
         [SetUp]
         public void SetUp()
         {
 
         }
-
 
 
 
@@ -42,9 +44,6 @@ namespace TestAeroCalc
             UnitsXMLFile xmlFile = new UnitsXMLFile("");
             //xmlFile.setOutputFileAbsolutePath(AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
             xmlFile.saveUnitDictionaryToXML(ud, AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
-
-
-
         }
 
     }
