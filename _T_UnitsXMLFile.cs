@@ -1,8 +1,8 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
 using NUnit.Framework;
 using AeroCalcCore;
-using System.IO;
-using System;
-using System.Collections.Generic;
 
 
 

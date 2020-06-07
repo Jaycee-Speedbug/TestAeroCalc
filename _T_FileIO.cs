@@ -29,7 +29,7 @@ namespace TestAeroCalc
         {
             FileIO fio = new FileIO();
             Assert.IsTrue(fio.setWorkDirectory(AppDomain.CurrentDomain.BaseDirectory + "/testdir/"));
-            Assert.IsEqual(FileInfo.FILEOP_SUCCESSFULL, fio.IOStatus);
+            Assert.AreEqual(FileInfo.FILEOP_SUCCESSFULL, fio.IOStatus);
         }
 
     }
