@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
 using NUnit.Framework;
 using AeroCalcCore;
 
@@ -22,11 +21,9 @@ namespace TestAeroCalc
 
 
 
-
         [Test]
-        public void _T_getUnitsFromXML()
+        public void getUnitsFromXML_1()
         {
-
             // Création du dictionnaire
 
             UnitsXMLFile uf = new UnitsXMLFile(AppDomain.CurrentDomain.BaseDirectory + 
@@ -37,6 +34,7 @@ namespace TestAeroCalc
                                           "Test_UnitsDictionary.xml");
             Assert.IsNotNull(ud);
 
+            /*
             List<Unit> lu = ud.getUnits();
             Assert.IsTrue(lu.Count > 1);
             
@@ -45,7 +43,6 @@ namespace TestAeroCalc
                 System.Console.WriteLine(u.ToString());
             }
 
-            /*
             // Enregistrement du dictionnaire
             UnitsXMLFile xmlFile = new UnitsXMLFile("");
             xmlFile.saveUnitDictionaryToXML(ud, AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");

@@ -26,9 +26,8 @@ namespace TestAeroCalc
 
 
         [Test]
-        public void _T_LoadCSV_SaveXML()
+        public void saveUnitDictionaryToXML_1()
         {
-
             // Création du dictionnaire
 
             UnitsCSVFile uf = new UnitsCSVFile();
@@ -40,9 +39,7 @@ namespace TestAeroCalc
                 System.Console.WriteLine(u.ToString());
             }
 
-            //XMLFile xmlFile = new XMLFile();
             UnitsXMLFile xmlFile = new UnitsXMLFile("");
-            //xmlFile.setOutputFileAbsolutePath(AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
             xmlFile.saveUnitDictionaryToXML(ud, AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
         }
 

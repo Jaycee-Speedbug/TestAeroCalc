@@ -14,21 +14,26 @@ namespace TestAeroCalc
 
 
 
+        PostProcessor PP;
+
+
+
         [SetUp]
         public void SetUp()
         {
-
+            PP = new PostProcessor(new EnvironmentContext("config/config.xml"));
         }
 
 
 
         [Test]
-        public void formatMessage()
+        public void formatMsg_1()
         {
             string[] table = { "MSG1", "MSG2" };
-            string message = "Ceci est un message de test avec une première donnée : $0, et une seconde : $1";
+            string message = "Test avec $0, et aussi $1";
+            string output = PP._A_formatMsg(message, table);
 
-            StringAssert.AreEqual("Ceci est un message de test avec une première donnée : MSG1, et une seconde : MSG2", formatMessage(message,table));
+            StringAssert.AreEqualIgnoringCase("Test avec MSG1, et aussi MSG2", output);
         }
 
 
