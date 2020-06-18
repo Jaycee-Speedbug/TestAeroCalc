@@ -16,8 +16,7 @@ namespace TestAeroCalc
         EnvironmentContext EC;
 
         [SetUp]
-        public void SetUp()
-        {
+        public void SetUp() {
             EC = new EnvironmentContext("config" + Path.DirectorySeparatorChar + "testconfig.xml");
             PP = new PostProcessor(EC);
         }
@@ -25,8 +24,7 @@ namespace TestAeroCalc
 
 
         [Test]
-        public void formatMsg_1()
-        {
+        public void formatMsg_1() {
             string[] table = { "MSG1", "MSG2" };
             string message = "Test avec $0, et aussi $1";
             string output = PP._A_formatMsg(message, table);
@@ -36,21 +34,24 @@ namespace TestAeroCalc
 
         [Test]
         public void setLanguage_1() {
-            Assert.IsTrue(PP.changeLanguage("") == AeroCalcCommand.ECODE_ERR_LANGFILE_PATH);
+            Language l = new Language("truc", "zz", "", true);
+            Assert.IsTrue(PP.changeLanguage(l) == AeroCalcCommand.ECODE_ERR_LANGFILE_PATH);
         }
 
         [Test]
         public void setLanguage_2() {
             // ES.xml est un fichier xml valide mais ne contgenant rien de loadable
             string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "es.xml";
-            Assert.IsTrue(PP.changeLanguage(fileName) == AeroCalcCommand.ECODE_ERR_LANGFILE_CONTENT);
+            Language l = new Language("truc", "zz", fileName, true);
+            Assert.IsTrue(PP.changeLanguage(l) == AeroCalcCommand.ECODE_ERR_LANGFILE_CONTENT);
         }
 
         [Test]
         public void setLanguage_3() {
             string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "fr.xml";
-            int feedback = PP.changeLanguage(fileName);
-            Assert.AreEqual(AeroCalcCommand.ECODE_LANG_CHANGED_SUCCESSFULL,feedback);
+            Language l = new Language("truc", "zz", fileName, true);
+            int feedback = PP.changeLanguage(l);
+            Assert.AreEqual(AeroCalcCommand.ECODE_LANG_CHANGED_SUCCESSFULL, feedback);
             //Assert.IsTrue(PP.changeLanguage(fileName) == AeroCalcCommand.ECODE_ERR_LANG_ALREADY_SET);
         }
     }
