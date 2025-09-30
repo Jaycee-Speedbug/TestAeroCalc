@@ -26,26 +26,25 @@ namespace TestAeroCalc
 
 
 
+        // Remplacer Assert.AreEqual(...) par Assert.That(..., Is.EqualTo(...))
         [Test]
         public void setWorkDirectory_1()
         {
-            // FileIO fio = new FileIO();
-            Assert.IsTrue(fio.setWorkDirectory(AppDomain.CurrentDomain.BaseDirectory + "/testdir/"));
-            Assert.AreEqual(FileIO.FILEOP_SUCCESSFUL, fio.IOStatus);
-            /*
-            */
+            Assert.That(fio.setWorkDirectory(AppDomain.CurrentDomain.BaseDirectory + "/testdir/"), Is.True);
+            Assert.That(fio.IOStatus, Is.EqualTo(FileIO.FILEOP_SUCCESSFUL));
         }
 
         [Test]
-        public void filesInDirectory_1() {
+        public void filesInDirectory_1()
+        {
 
             fio.setWorkDirectory("theunknowndir");
             List<string> ls = fio.filesInDirectory("", "*.*");
-            Assert.AreEqual(0, ls.Count);
+            Assert.That(ls.Count, Is.EqualTo(0));
 
             fio.setWorkDirectory(AppDomain.CurrentDomain.BaseDirectory + "/testdir/");
             ls = fio.filesInDirectory("", "*.txt");
-            Assert.AreEqual(2, ls.Count);
+            Assert.That(ls.Count, Is.EqualTo(2));
             /*
             */
         }

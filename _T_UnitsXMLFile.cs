@@ -12,27 +12,23 @@ namespace TestAeroCalc
     [TestFixture]
     public class _T_UnitsXMLFile
     {
-
         [SetUp]
         public void SetUp()
         {
-
         }
-
-
 
         [Test]
         public void getUnitsFromXML_1()
         {
             // Création du dictionnaire
 
-            UnitsXMLFile uf = new UnitsXMLFile(AppDomain.CurrentDomain.BaseDirectory + 
-                                               Path.DirectorySeparatorChar + 
+            UnitsXMLFile uf = new UnitsXMLFile(AppDomain.CurrentDomain.BaseDirectory +
+                                               Path.DirectorySeparatorChar +
                                                "Test_UnitsDictionary.xml");
-            Units ud = uf.getUnitsFromXML(AppDomain.CurrentDomain.BaseDirectory + 
-                                          Path.DirectorySeparatorChar + 
+            Units ud = uf.getUnitsFromXML(AppDomain.CurrentDomain.BaseDirectory +
+                                          Path.DirectorySeparatorChar +
                                           "Test_UnitsDictionary.xml");
-            Assert.IsNotNull(ud);
+            Assert.That(ud, Is.Not.Null);
 
             /*
             List<Unit> lu = ud.getUnits();
@@ -47,11 +43,7 @@ namespace TestAeroCalc
             UnitsXMLFile xmlFile = new UnitsXMLFile("");
             xmlFile.saveUnitDictionaryToXML(ud, AppDomain.CurrentDomain.BaseDirectory + "TEST-Units.xml");
             */
-
-
-
         }
-
     }
 
 }

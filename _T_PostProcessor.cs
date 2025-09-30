@@ -1,8 +1,5 @@
-using System;
-using NUnit.Framework;
 using AeroCalcCore;
-using System.IO;
-using System.IO.Enumeration;
+using NUnit.Framework;
 
 namespace TestAeroCalc
 {
@@ -12,47 +9,66 @@ namespace TestAeroCalc
     public class _T_PostProcessor
     {
 
-        PostProcessor PP;
-        EnvironmentContext EC;
+        PostProcessor? PP;
+        EnvironmentContext? EC;
 
         [SetUp]
-        public void SetUp() {
+        public void SetUp()
+        {
             EC = new EnvironmentContext("config" + Path.DirectorySeparatorChar + "testconfig.xml");
             PP = new PostProcessor(EC);
         }
 
 
 
+
+        // Remplacez la ligne suivante dans le test formatMsg_1 :
+        // Assert.AreEqual("Test avec MSG1, et aussi MSG2", output, ignoreCase: true);
+
+
+        // Exemple de correction dans le test :
         [Test]
-        public void formatMsg_1() {
+        public void formatMsg_1()
+        {
             string[] table = { "MSG1", "MSG2" };
             string message = "Test avec $0, et aussi $1";
             string output = PP._A_formatMsg(message, table);
 
-            StringAssert.AreEqualIgnoringCase("Test avec MSG1, et aussi MSG2", output);
+            Assert.That(output, Is.EqualTo("Test avec MSG1, et aussi MSG2").IgnoreCase);
         }
 
         [Test]
-        public void setLanguage_1() {
+        public void setLanguage_1()
+        {
             Language l = new Language("truc", "zz", "", true);
-            Assert.IsTrue(PP.changeLanguage(l) == AeroCalcCommand.ECODE_ERR_LANGFILE_PATH);
+            Assert.That(PP.changeLanguage(l), Is.EqualTo(AeroCalcCommand.ECODE_ERR_LANGFILE_PATH));
         }
 
         [Test]
-        public void setLanguage_2() {
-            // ES.xml est un fichier xml valide mais ne contgenant rien de loadable
-            string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "es.xml";
+        public void setLanguage_2()
+        {
+            // ES.xml est un fichier xml valide mais ne contenant rien de loadable
+            string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "testes.xml";
             Language l = new Language("truc", "zz", fileName, true);
-            Assert.IsTrue(PP.changeLanguage(l) == AeroCalcCommand.ECODE_ERR_LANGFILE_CONTENT);
+            Assert.That(PP.changeLanguage(l), Is.EqualTo(AeroCalcCommand.ECODE_ERR_LANGFILE_CONTENT_MISSING));
         }
 
         [Test]
-        public void setLanguage_3() {
-            string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "fr.xml";
-            Language l = new Language("truc", "zz", fileName, true);
+        public void setLanguage_3()
+        {
+            string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "testfr.xml";
+            Language l = new Language("français", "FR", fileName, true);
             int feedback = PP.changeLanguage(l);
-            Assert.AreEqual(AeroCalcCommand.ECODE_LANG_CHANGED_SUCCESSFULL, feedback);
-            //Assert.IsTrue(PP.changeLanguage(fileName) == AeroCalcCommand.ECODE_ERR_LANG_ALREADY_SET);
+            Assert.That(feedback, Is.EqualTo(AeroCalcCommand.ECODE_LANG_CHANGED_SUCCESSFULL));
+        }
+
+        [Test]
+        public void setLanguage_4()
+        {
+            string fileName = EC.configDirPath + Path.DirectorySeparatorChar + "testez.xml";
+            Language l = new Language("truc", "ZZ", fileName, true);
+            int feedback = PP.changeLanguage(l);
+            Assert.That(feedback, Is.EqualTo(AeroCalcCommand.ECODE_ERR_LANGFILE_ID));
         }
     }
 }

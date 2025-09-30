@@ -17,8 +17,6 @@ namespace TestAeroCalc
             EM = new EventMessages();
         }
 
-
-
         [Test]
         public void AddEventMsg_1()
         {
@@ -29,26 +27,27 @@ namespace TestAeroCalc
 
             // We should find that record
             string msg = EM._A_getEventMessage(-510).msgStr;
-            Assert.IsNotNull(msg);
+            Assert.That(msg, Is.Not.Null);
 
             // Should find that message
             msg = EM._A_getEventMessage(500).msgStr;
-            StringAssert.AreEqualIgnoringCase("Message évènement 500", msg);
+            Assert.That(msg, Is.EqualTo("Message évènement 500").IgnoreCase);
 
             // We should have recorded that 'Count' elements
-            Assert.AreEqual(EM.Count, 4);
+            // Remplacez Assert.AreEqual(EM.Count, 4); par la syntaxe correcte NUnit : Assert.That(EM.Count, Is.EqualTo(4));
+            Assert.That(EM.Count, Is.EqualTo(4));
 
             // No addition of an EventMessage with the same eventCode
             int count = EM.Count;
             EM.Add(new EventMessage(500, "Il y en a déjà un message pour le code -500..."));
-            Assert.IsTrue(count == EM.Count);
+            // Remplacez Assert.IsTrue(count == EM.Count); par la syntaxe correcte NUnit : Assert.That(count == EM.Count);
+            Assert.That(count, Is.EqualTo(EM.Count));
 
             // No addition of an EventMessage with the same eventCode
             count = EM.Count;
             EM.addItem(10510, "Il y en a déjà un message pour le code -510...");
-            Assert.IsTrue(count == EM.Count);
+            Assert.That(count, Is.EqualTo(EM.Count));
         }
-
     }
 
 }

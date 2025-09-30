@@ -32,22 +32,24 @@ namespace TestAeroCalc
 
             PerfSerie psClone = new PerfSerie(ps);
 
-            Assert.AreEqual(3, psClone.count);
+            Assert.That(3, Is.EqualTo(psClone.count));
 
             for (int count = 0; count < ps.count; count++) {
-                Assert.AreEqual(ps.pointAt(count).factorValue, psClone.pointAt(count).factorValue);
+                Assert.That(ps.pointAt(count).factorValue, Is.EqualTo(psClone.pointAt(count).factorValue));
             }
         }
 
 
-        // Test du non enregistrement de deux layers de performance de même abscisse
+        // Remplacer Assert.IsTrue(...) par Assert.That(..., Is.True) et Assert.IsFalse(...) par Assert.That(..., Is.False)
+
         [Test]
-        public void add_1() {
+        public void add_1()
+        {
 
             PerfSerie ps = new PerfSerie();
 
-            Assert.IsTrue(ps.add(new PerfPoint(1, 5, false)));
-            Assert.IsFalse(ps.add(new PerfPoint(1, 10, false)));
+            Assert.That(ps.add(new PerfPoint(1, 5, false)), Is.True);
+            Assert.That(ps.add(new PerfPoint(1, 10, false)), Is.False);
         }
 
 
@@ -62,11 +64,11 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(-1, 15, false));
             ps.add(new PerfPoint(8, 6, false));
 
-            Assert.AreEqual(-5, ps.pointAt(0).factorValue);
-            Assert.AreEqual(-1, ps.pointAt(1).factorValue);
-            Assert.AreEqual(1, ps.pointAt(2).factorValue);
-            Assert.AreEqual(3, ps.pointAt(3).factorValue);
-            Assert.AreEqual(8, ps.pointAt(4).factorValue);
+            Assert.That(-5, Is.EqualTo(ps.pointAt(0).factorValue));
+            Assert.That(-1, Is.EqualTo(ps.pointAt(1).factorValue));
+            Assert.That(1, Is.EqualTo(ps.pointAt(2).factorValue));
+            Assert.That(3, Is.EqualTo(ps.pointAt(3).factorValue));
+            Assert.That(8, Is.EqualTo(ps.pointAt(4).factorValue));
         }
 
 
@@ -88,7 +90,7 @@ namespace TestAeroCalc
             pp3.selected = true;
             pp4.selected = true;
 
-            Assert.AreEqual(2, ps.selectedCount());
+            Assert.That(2, Is.EqualTo(ps.selectedCount()));
         }
 
 
@@ -106,10 +108,10 @@ namespace TestAeroCalc
             ps.add(pp3);
             ps.add(pp4);
 
-            Assert.AreEqual(0, ps.getIndexOf(pp2));
-            Assert.AreEqual(1, ps.getIndexOf(pp3));
-            Assert.AreEqual(2, ps.getIndexOf(pp1));
-            Assert.AreEqual(3, ps.getIndexOf(pp4));
+            Assert.That(0, Is.EqualTo(ps.getIndexOf(pp2)));
+            Assert.That(1, Is.EqualTo(ps.getIndexOf(pp3)));
+            Assert.That(2, Is.EqualTo(ps.getIndexOf(pp1)));
+            Assert.That(3, Is.EqualTo(ps.getIndexOf(pp4)));
         }
 
 
@@ -185,16 +187,16 @@ namespace TestAeroCalc
             PerfSerie ps = new PerfSerie();
             int[] table;
 
-            Assert.IsNull(ps._A_sortedClosestPoints(0));
+            Assert.That(ps._A_sortedClosestPoints(0), Is.Null);
 
             ps.add(new PerfPoint(-12, 10, false));
             table = ps._A_sortedClosestPoints(-13);
-            Assert.AreEqual(0, table[0]);
+            Assert.That(0, Is.EqualTo(table[0]));
 
             ps.add(new PerfPoint(-9, 5, true));
             table = ps._A_sortedClosestPoints(-10);
-            Assert.AreEqual(1, table[0]);
-            Assert.AreEqual(0, table[1]);
+            Assert.That(1, Is.EqualTo(table[0]));
+            Assert.That(0, Is.EqualTo(table[1]));
 
             ps.add(new PerfPoint(-8, 5, true));
             ps.add(new PerfPoint(-5, -1, false));
@@ -208,59 +210,62 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(32, 41, false));
 
             table = ps._A_sortedClosestPoints(-13);
-            Assert.AreEqual(0, table[0]);
-            Assert.AreEqual(11, table[11]);
+            Assert.That(0, Is.EqualTo(table[0]));
+            Assert.That(11, Is.EqualTo(table[11]));
 
             table = ps._A_sortedClosestPoints(-7.5);
-            Assert.AreEqual(2, table[0]);
+            Assert.That(2, Is.EqualTo(table[0]));
         }
 
 
-        // Test de sélection des layers d'intérêts, sans isBreak
+        // Remplacer tous les Assert.IsTrue(...) et Assert.IsFalse(...) dans le fichier par Assert.That(..., Is.True) ou Assert.That(..., Is.False) respectivement.
+
+        // Exemple pour selectPoints_1 :
         [Test]
-        public void selectPoints_1() {
+        public void selectPoints_1()
+        {
 
             PerfSerie ps = new PerfSerie();
-            Assert.IsFalse(ps._A_selectPoints(0, 5));
+            Assert.That(ps._A_selectPoints(0, 5), Is.False);
 
             ps.add(new PerfPoint(-12, 10, false));
-            Assert.IsTrue(ps._A_selectPoints(0, 5));
-            Assert.IsTrue(ps.pointAt(0).selected);
+            Assert.That(ps._A_selectPoints(0, 5), Is.True);
+            Assert.That(ps.pointAt(0).selected, Is.True);
 
             ps.add(new PerfPoint(-9, 5, false));
-            Assert.IsTrue(ps._A_selectPoints(0, 3));
-            Assert.IsTrue(ps.pointAt(0).selected);
-            Assert.IsTrue(ps.pointAt(1).selected);
+            Assert.That(ps._A_selectPoints(0, 3), Is.True);
+            Assert.That(ps.pointAt(0).selected, Is.True);
+            Assert.That(ps.pointAt(1).selected, Is.True);
 
             ps.add(new PerfPoint(-8, 5, false));
-            Assert.IsTrue(ps._A_selectPoints(-10, 2));
-            Assert.IsTrue(ps.pointAt(0).selected);
-            Assert.IsTrue(ps.pointAt(1).selected);
-            Assert.IsFalse(ps.pointAt(2).selected);
+            Assert.That(ps._A_selectPoints(-10, 2), Is.True);
+            Assert.That(ps.pointAt(0).selected, Is.True);
+            Assert.That(ps.pointAt(1).selected, Is.True);
+            Assert.That(ps.pointAt(2).selected, Is.False);
 
             ps.add(new PerfPoint(-5, -1, false));
             ps.add(new PerfPoint(-1, -1, false));
-            Assert.IsTrue(ps._A_selectPoints(-5.5, 4));
-            Assert.IsTrue(ps.pointAt(3).selected);
-            Assert.IsTrue(ps.pointAt(2).selected);
-            Assert.IsTrue(ps.pointAt(1).selected);
-            Assert.IsTrue(ps.pointAt(4).selected);
-            Assert.IsFalse(ps.pointAt(0).selected);
+            Assert.That(ps._A_selectPoints(-5.5, 4), Is.True);
+            Assert.That(ps.pointAt(3).selected, Is.True);
+            Assert.That(ps.pointAt(2).selected, Is.True);
+            Assert.That(ps.pointAt(1).selected, Is.True);
+            Assert.That(ps.pointAt(4).selected, Is.True);
+            Assert.That(ps.pointAt(0).selected, Is.False);
 
             ps.add(new PerfPoint(0, 1, false));
             ps.add(new PerfPoint(1, 1, false));
             ps.add(new PerfPoint(3, 0, false));
             ps.add(new PerfPoint(7, 3, false));
-            Assert.IsTrue(ps._A_selectPoints(-1.5, 3));
-            Assert.IsFalse(ps.pointAt(0).selected);
-            Assert.IsFalse(ps.pointAt(1).selected);
-            Assert.IsFalse(ps.pointAt(2).selected);
-            Assert.IsFalse(ps.pointAt(3).selected);
-            Assert.IsTrue(ps.pointAt(4).selected);
-            Assert.IsTrue(ps.pointAt(5).selected);
-            Assert.IsTrue(ps.pointAt(6).selected);
-            Assert.IsFalse(ps.pointAt(7).selected);
-            Assert.IsFalse(ps.pointAt(8).selected);
+            Assert.That(ps._A_selectPoints(-1.5, 3), Is.True);
+            Assert.That(ps.pointAt(0).selected, Is.False);
+            Assert.That(ps.pointAt(1).selected, Is.False);
+            Assert.That(ps.pointAt(2).selected, Is.False);
+            Assert.That(ps.pointAt(3).selected, Is.False);
+            Assert.That(ps.pointAt(4).selected, Is.True);
+            Assert.That(ps.pointAt(5).selected, Is.True);
+            Assert.That(ps.pointAt(6).selected, Is.True);
+            Assert.That(ps.pointAt(7).selected, Is.False);
+            Assert.That(ps.pointAt(8).selected, Is.False);
 
         }
 
@@ -279,29 +284,29 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(1, 1, true));
             ps.add(new PerfPoint(3, 0, true));
             ps.add(new PerfPoint(7, 3, false));
-            Assert.IsTrue(ps._A_selectPoints(-1.5, 3));
+            Assert.That(ps._A_selectPoints(-1.5, 3), Is.Null);
 
-            Assert.IsFalse(ps.pointAt(0).selected);
-            Assert.IsFalse(ps.pointAt(1).selected);
-            Assert.IsTrue(ps.pointAt(2).selected);
-            Assert.IsTrue(ps.pointAt(3).selected);
-            Assert.IsTrue(ps.pointAt(4).selected);
-            Assert.IsFalse(ps.pointAt(5).selected);
-            Assert.IsFalse(ps.pointAt(6).selected);
-            Assert.IsFalse(ps.pointAt(7).selected);
-            Assert.IsFalse(ps.pointAt(8).selected);
+            Assert.That(ps.pointAt(0).selected, Is.Null);
+            Assert.That(ps.pointAt(1).selected, Is.Null);
+            Assert.That(ps.pointAt(2).selected, Is.Null);
+            Assert.That(ps.pointAt(3).selected, Is.Null);
+            Assert.That(ps.pointAt(4).selected, Is.Null);
+            Assert.That(ps.pointAt(5).selected, Is.Null);
+            Assert.That(ps.pointAt(6).selected, Is.Null);
+            Assert.That(ps.pointAt(7).selected, Is.Null);
+            Assert.That(ps.pointAt(8).selected, Is.Null);
 
-            Assert.IsTrue(ps._A_selectPoints(2, 3));
+            Assert.That(ps._A_selectPoints(2, 3), Is.Null);
 
-            Assert.IsFalse(ps.pointAt(0).selected);
-            Assert.IsFalse(ps.pointAt(1).selected);
-            Assert.IsFalse(ps.pointAt(2).selected);
-            Assert.IsFalse(ps.pointAt(3).selected);
-            Assert.IsFalse(ps.pointAt(4).selected);
-            Assert.IsFalse(ps.pointAt(5).selected);
-            Assert.IsTrue(ps.pointAt(6).selected);
-            Assert.IsTrue(ps.pointAt(7).selected);
-            Assert.IsFalse(ps.pointAt(8).selected);
+            Assert.That(ps.pointAt(0).selected, Is.Null);
+            Assert.That(ps.pointAt(1).selected, Is.Null);
+            Assert.That(ps.pointAt(2).selected, Is.Null);
+            Assert.That(ps.pointAt(3).selected, Is.Null);
+            Assert.That(ps.pointAt(4).selected, Is.Null);
+            Assert.That(ps.pointAt(5).selected, Is.Null);
+            Assert.That(ps.pointAt(6).selected, Is.Null);
+            Assert.That(ps.pointAt(7).selected, Is.Null);
+            Assert.That(ps.pointAt(8).selected, Is.Null);
 
         }
 
@@ -320,7 +325,7 @@ namespace TestAeroCalc
             catch (ModelException e) {
                 result = true;
             }
-            Assert.IsTrue(result);
+            Assert.That(result, Is.Null);
 
             // Insertion de layers (pp1 ; pp2 = (1/8)pp1² + pp1 + 3)
             ps.add(new PerfPoint(-8, 3, false));
@@ -334,10 +339,11 @@ namespace TestAeroCalc
             catch (ModelException e) {
                 result = true;
             }
-            Assert.IsTrue(result);
+            Assert.That(result, Is.Null);
 
             // Interpolation linéaire quand il n'pp2 a que deux layers
-            Assert.AreEqual(2.5, ps.predict(-7));
+            // Remplacer Assert.AreEqual(...) par Assert.That(..., Is.EqualTo(...))
+            Assert.That(2.5, Is.EqualTo(ps.predict(-7)));
 
             ps.add(new PerfPoint(1, (1 / 8) * Math.Pow(1, 2) + (1) + 3, false));
             ps.add(new PerfPoint(3, (1 / 8) * Math.Pow(3, 2) + (3) + 3, false));
@@ -345,9 +351,10 @@ namespace TestAeroCalc
             ps.setRange();
 
             // Test de la prédiction de niveau 2 (polynôme ² avec 3 layers)
-            Assert.IsTrue(isWithinPrecision((double)ps.predict(5),
-                                            (1 / 8) * Math.Pow(5, 2) + (5) + 3,
-                                            0.0000001));
+            // Remplacer Assert.IsTrue(...) par Assert.That(..., Is.True)
+            Assert.That(isWithinPrecision((double)ps.predict(5),
+                                         (1 / 8) * Math.Pow(5, 2) + (5) + 3,
+                                         0.0000001), Is.True);
         }
 
 

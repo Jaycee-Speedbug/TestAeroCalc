@@ -33,7 +33,8 @@ namespace TestAeroCalc
             UnitsCSVFile uf = new UnitsCSVFile();
             Units ud = uf.getUnitsFromCSV(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "UnitsDictionary.csv");
             List<Unit> lu = ud.getUnits();
-            Assert.IsTrue(lu.Count > 0);
+            // Remplacez Assert.IsTrue(lu.Count > 0); par Assert.That(lu.Count > 0);
+            Assert.That(lu.Count > 0);
             foreach (Unit u in lu)
             {
                 System.Console.WriteLine(u.ToString());

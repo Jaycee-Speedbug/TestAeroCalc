@@ -31,11 +31,12 @@ namespace TestAeroCalc
             pl.add(new PerfPoint(-1, 2, false), 200);
             pl.add(new PerfPoint(4, 2, false), 200);
 
-            Assert.AreEqual(2, pl.count);
-            Assert.AreEqual(3, pl.SerieAt(0).count);
-            Assert.AreEqual(4, pl.SerieAt(1).count);
-            Assert.AreEqual(-4, pl.SerieAt(0).pointAt(1).factorValue);
-            Assert.AreEqual(-1, pl.SerieAt(1).pointAt(2).factorValue);
+            Assert.That(pl.count, Is.EqualTo(2));
+            Assert.That(pl.SerieAt(0).count, Is.EqualTo(3));
+            Assert.That(pl.SerieAt(1).count, Is.EqualTo(4));
+            Assert.That(pl.SerieAt(0).pointAt(1).factorValue, Is.EqualTo(-4));
+            Assert.That(pl.SerieAt(1).pointAt(2).factorValue, Is.EqualTo(-1));
+            Assert.That(pl.count, Is.EqualTo(5));
         }
 
 
@@ -49,16 +50,16 @@ namespace TestAeroCalc
             pl.add(new PerfPoint(10, 10, false), 210);
             pl.add(new PerfPoint(3, 5, false), 260);
 
-            Assert.AreEqual(5, pl.count);
+            Assert.That(pl.count, Is.EqualTo(5));
 
             int[] table = pl._A_SortedClosestSeries(195);
 
-            Assert.AreEqual(5, table.Length);
-            Assert.AreEqual(2, table[0]);
-            Assert.AreEqual(3, table[1]);
-            Assert.AreEqual(4, table[2]);
-            Assert.AreEqual(1, table[3]);
-            Assert.AreEqual(0, table[4]);
+            Assert.That(table.Length, Is.EqualTo(5));
+            Assert.That(table[0], Is.EqualTo(2));
+            Assert.That(table[1], Is.EqualTo(3));
+            Assert.That(table[2], Is.EqualTo(4));
+            Assert.That(table[3], Is.EqualTo(1));
+            Assert.That(table[4], Is.EqualTo(0));
         }
 
 
@@ -66,20 +67,25 @@ namespace TestAeroCalc
         public void selectSubLayer_1() {
 
             PerfLayer pl = new PerfLayer();
+
             pl.add(new PerfPoint(1, 4, false), 100);
             pl.add(new PerfPoint(3, 5, false), 120);
             pl.add(new PerfPoint(8, 6, false), 200);
             pl.add(new PerfPoint(10, 10, false), 210);
             pl.add(new PerfPoint(3, 5, false), 260);
             pl.add(new PerfPoint(8, 12, false), 270);
+
             pl._A_SelectSubLayer(195, 3);
-            Assert.AreEqual(3, pl.selectedCount());
-            Assert.IsFalse(pl.SerieAt(0).selected);
-            Assert.IsFalse(pl.SerieAt(1).selected);
-            Assert.IsTrue(pl.SerieAt(2).selected);
-            Assert.IsTrue(pl.SerieAt(3).selected);
-            Assert.IsTrue(pl.SerieAt(4).selected);
-            Assert.IsFalse(pl.SerieAt(5).selected);
+
+            Assert.That(pl.count, Is.EqualTo(6));
+            Assert.That(pl.selectedCount(), Is.EqualTo(3));
+
+            Assert.That(pl.SerieAt(0).selected, Is.False);
+            Assert.That(pl.SerieAt(1).selected, Is.False);
+            Assert.That(pl.SerieAt(2).selected, Is.True);
+            Assert.That(pl.SerieAt(3).selected, Is.True);
+            Assert.That(pl.SerieAt(4).selected, Is.True);
+            Assert.That(pl.SerieAt(5).selected, Is.False);
         }
 
 
@@ -115,14 +121,17 @@ namespace TestAeroCalc
             pl.add(ps3);
 
             result = true;
-            try {
-                Assert.AreEqual(1.375, pl.predict(2, 150));
+            try
+            {
+                Assert.That(pl.predict(2, 150), Is.EqualTo(1.375));
             }
-            catch (ModelException) {
+            catch (ModelException)
+            {
                 // No exception should be raised here
                 result = false;
             }
-            Assert.IsTrue(result);
+            // Remplacez Assert.IsTrue(result); par Assert.That(result, Is.True);
+            Assert.That(result, Is.True);
         }
 
     }

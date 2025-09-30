@@ -17,8 +17,6 @@ namespace TestAeroCalc
         public void SetUp()
         {
             EnvCtxt = new EnvironmentContext();
-
-
         }
 
 
@@ -27,21 +25,21 @@ namespace TestAeroCalc
         public void loadConfigFile_1()
         {
             EnvCtxt.loadConfigFile("");
-            Assert.IsTrue(EnvCtxt.status != FileIO.FILEOP_SUCCESSFUL);
+            Assert.That(EnvCtxt.status != FileIO.FILEOP_SUCCESSFUL);
         }
 
         [Test]
         public void loadConfigFile_2()
         {
             EnvCtxt.loadConfigFile("/etc/bin/bash.txt");
-            Assert.AreEqual((double)EnvCtxt.status, (double)FileIO.FILEOP_INVALID_PATH);
+            Assert.That(EnvCtxt.status, Is.EqualTo(FileIO.FILEOP_INVALID_PATH));
         }
 
         [Test]
         public void loadConfigFile_3()
         {
-            EnvCtxt.loadConfigFile("config/config.xml");
-            Assert.AreEqual(EnvCtxt.status, FileIO.FILEOP_SUCCESSFUL);
+            EnvCtxt.loadConfigFile("config/testconfig.xml");
+            Assert.That(EnvCtxt.status, Is.EqualTo(FileIO.FILEOP_SUCCESSFUL));
         }
     }
 }

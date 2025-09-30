@@ -35,7 +35,7 @@ namespace TestAeroCalc
             catch (ModelException e) {
                 result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
             }
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
 
@@ -63,7 +63,7 @@ namespace TestAeroCalc
             catch (ModelException e) {
                 result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
             }
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
 
             // Test de la prédiction de niveau 2 ( polynôme ^2 )
 
@@ -78,8 +78,9 @@ namespace TestAeroCalc
                 // Dans ce cas, aucune exception ne doit être levée
                 result = false;
             }
-            Assert.AreEqual(expected, calculation);
-            Assert.IsTrue(result);
+            // Remplacez Assert.AreEqual(expected, calculation); par Assert.That(calculation, Is.EqualTo(expected));
+            Assert.That(calculation, Is.EqualTo(expected));
+            Assert.That(result, Is.True);
         }
     }
 }

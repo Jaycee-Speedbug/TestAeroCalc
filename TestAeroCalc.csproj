@@ -1,31 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <!-- TargetFramework>netcoreapp3.1</TargetFramework-->
-    <!-- IsPackable>false</IsPackable-->
-    <TargetFramework Condition="'$(TargetFrameworkOverride)' == ''">netcoreapp3.1</TargetFramework>
-    <TargetFramework Condition="'$(TargetFrameworkOverride)' != ''">TargetFrameworkOverride</TargetFramework>
-    <RootNamespace Condition="'$(name)' != '$(name{-VALUE-FORMS-}safe_namespace)'">AeroCalcTest</RootNamespace>
+	<PropertyGroup>
+		<!-- Tests NUnit modernes -->
+		<TargetFramework>net8.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>AeroCalcTest</RootNamespace>
+	</PropertyGroup>
 
-    <!-- GenerateProgramFile>false</GenerateProgramFile -->
+	<ItemGroup>
+		<PackageReference Include="NUnit" Version="4.4.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="5.1.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+	</ItemGroup>
 
-    <IsPackable Condition="'$(EnablePack)' == 'true'">true</IsPackable>
-    <IsPackable Condition="'$(EnablePack)' != 'true'">false</IsPackable>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    <PackageReference Include="NUnit.ConsoleRunner" Version="3.11.1" />
-    <!-- PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference -->
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AeroCalcCore\AeroCalcCore.csproj" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\AeroCalcCore\AeroCalcCore.csproj" />
+	</ItemGroup>
 </Project>
