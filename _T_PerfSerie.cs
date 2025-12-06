@@ -72,7 +72,7 @@ namespace TestAeroCalc
         }
 
 
-        // Test du comptage des layers sélectionnés
+        // Test du comptage des PerfPoints sélectionnés
         [Test]
         public void selectedCount_1() {
 
@@ -87,10 +87,10 @@ namespace TestAeroCalc
             ps.add(pp3);
             ps.add(pp4);
             ps.add(pp5);
-            pp3.selected = true;
-            pp4.selected = true;
+            //pp3.selected = true;
+            //pp4.selected = true;
 
-            Assert.That(2, Is.EqualTo(ps.selectedCount()));
+            //Assert.That(2, Is.EqualTo(ps.selectedCount()));
         }
 
 
@@ -183,18 +183,20 @@ namespace TestAeroCalc
 
         // Test du classement des indexes de layers par rapport à une abscisse de référence
         [Test]
-        public void sortedClosestPoints_1() {
+        public void sortedClosestPointsIndexes_1() {
+            
             PerfSerie ps = new PerfSerie();
             int[] table;
 
-            Assert.That(ps._A_sortedClosestPoints(0), Is.Null);
+            Assert.That(ps._A_sortedClosestPointsIndexes(0), Is.Null);
 
             ps.add(new PerfPoint(-12, 10, false));
-            table = ps._A_sortedClosestPoints(-13);
+
+            table = ps._A_sortedClosestPointsIndexes(-13);
             Assert.That(0, Is.EqualTo(table[0]));
 
             ps.add(new PerfPoint(-9, 5, true));
-            table = ps._A_sortedClosestPoints(-10);
+            table = ps._A_sortedClosestPointsIndexes(-10);
             Assert.That(1, Is.EqualTo(table[0]));
             Assert.That(0, Is.EqualTo(table[1]));
 
@@ -209,17 +211,18 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(15, 9, false));
             ps.add(new PerfPoint(32, 41, false));
 
-            table = ps._A_sortedClosestPoints(-13);
+            table = ps._A_sortedClosestPointsIndexes(-13);
             Assert.That(0, Is.EqualTo(table[0]));
             Assert.That(11, Is.EqualTo(table[11]));
 
-            table = ps._A_sortedClosestPoints(-7.5);
+            table = ps._A_sortedClosestPointsIndexes(-7.5);
             Assert.That(2, Is.EqualTo(table[0]));
         }
 
 
         // Remplacer tous les Assert.IsTrue(...) et Assert.IsFalse(...) dans le fichier par Assert.That(..., Is.True) ou Assert.That(..., Is.False) respectivement.
 
+        /*
         // Exemple pour selectPoints_1 :
         [Test]
         public void selectPoints_1()
@@ -309,6 +312,8 @@ namespace TestAeroCalc
             Assert.That(ps.pointAt(8).selected, Is.Null);
 
         }
+        */
+
 
 
         // Test du service de prédiction

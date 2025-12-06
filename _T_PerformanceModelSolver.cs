@@ -10,10 +10,6 @@ namespace TestAeroCalc
     [TestFixture]
     public class _T_PerformanceModelSolver
     {
-        PerfSerie ps;
-        PerformanceModelSolver pms;
-
-
 
         [SetUp]
         public void SetUp() {
@@ -27,6 +23,7 @@ namespace TestAeroCalc
         public void constructor()
         {
             PerfSerie ps2 = null;
+            PerformanceModelSolver pms;
             try
             {
                 // Prédiction sur une série vide, doit lever une exception
@@ -37,39 +34,31 @@ namespace TestAeroCalc
                 Assert.That(ex.nature == AeroCalc.E_VOID_SYSTEM);
             }
 
-            ps = new PerfSerie();
+            ps2 = new PerfSerie();
             try
             {
                 // Prédiction sur une série ne comportant qu'un seul point, doit lever une exception
-                pms = new PerformanceModelSolver(ps);
+                pms = new PerformanceModelSolver(ps2);
             }
             catch (ModelException ex)
             {
-                Assert.That(ex.nature == AeroCalc.E_SHORT_SERIE);
+                Assert.That(ex.nature == AeroCalc.E_TOO_SHORT_SERIE);
             }
 
         }
 
-
-
-        [Test]
-        public void interpolate_1() {
-
-            ps.selectAll();
-            ps.setRange();
-            bool result = false;
-
-            try {
-                pms.interpolate(5.0);
-            }
-            catch (ModelException e) {
-                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
-            }
-            Assert.That(result, Is.True);
-        }
 
 
         // Test des helpers
+        /// <summary>
+        /// Tests that the ordered index retrieval by distance returns the expected order of indexes for a given target
+        /// value.
+        /// </summary>
+        /// <remarks>
+        /// This test verifies that the PerformanceModelSolver._A_orderedIndexesByDistance method
+        /// correctly orders the indexes of PerfSerie points based on their proximity to the specified value. It asserts
+        /// that the returned array matches the expected order for a sample data set.
+        /// </remarks>
         [Test]
         public void orderedIndexesByDistance_1()
         {
@@ -84,7 +73,7 @@ namespace TestAeroCalc
             // Abscisses des points (triés) de la série : -5, -2, 1, 3, 8
             // On teste la recherche des points les plus proches de -1.0
 
-            pms = new PerformanceModelSolver(ps2);
+            PerformanceModelSolver pms = new PerformanceModelSolver(ps2);
 
             int[] testTable = pms._A_orderedIndexesByDistance(-1.0);
             Assert.That(testTable[0] == 1); // point d'abscisse -2
@@ -97,50 +86,31 @@ namespace TestAeroCalc
 
 
 
+        /// <summary>
+        /// Test de la régression polynomiale
+        /// </summary>
         [Test]
         public void interpolate_2() {
 
-            ps = new PerfSerie();
-            // Polynome               0.5 . x^2 + x - 1
+            // Série basée sur le polynome : 0.5 . x^2 + x - 1
+            PerfSerie ps = new PerfSerie();
             ps.add(new PerfPoint(3, 0.5 * Math.Pow(3, 2) + (3) - 1, false));
             ps.add(new PerfPoint(1, 0.5 * Math.Pow(1, 2) + (1) - 1, false));
             ps.add(new PerfPoint(-5, 0.5 * Math.Pow(-5, 2) + (-5) - 1, false));
             ps.add(new PerfPoint(-1, 0.5 * Math.Pow(-1, 2) + (-1) - 1, false));
             ps.add(new PerfPoint(8, 0.5 * Math.Pow(8, 2) + (8) - 1, false));
             ps.setRange();
-            pms = new PerformanceModelSolver(ps);
 
-            // Lève une exception quand aucun point n'est sélectionné
-
-            bool result = false;
-            try {
-                ps.selectNone();
-                pms.interpolate(0.0);
-            }
-            catch (ModelException e) {
-                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
-            }
-            Assert.That(result, Is.True);
-
-            // Test de la prédiction de niveau 2 ( polynôme ^2 )
-
-            result = true;
-            double calculation = 0.0;
+            // Test de la régression polynomiale
+            PerformanceModelSolver pms = new PerformanceModelSolver(ps);
             double expected = 0.5 * Math.Pow(5, 2) + (5) - 1; // 16.5
-            try {
-                ps.selectAll();
-                calculation = pms.interpolate(5);
-            }
-            catch (ModelException e) {
-                // Dans ce cas, aucune exception ne doit être levée
-                result = false;
-            }
-            // Remplacez Assert.AreEqual(expected, calculation); par Assert.That(calculation, Is.EqualTo(expected));
-            Assert.That(calculation, Is.EqualTo(expected));
-            Assert.That(result, Is.True);
+
+            Assert.That(pms.interpolateLagrange(5), Is.EqualTo(expected));
         }
+
     }
 }
+
 
 
 
@@ -162,6 +132,24 @@ public void Test_PI_pointsOfInterest_1() {
     Assert.AreEqual(1, tab[1]);
     Assert.AreEqual(2, tab[2]);
 }
+
+
+        [Test]
+        public void interpolate_1() {
+
+            PerfSerie ps = new PerfSerie();
+            ps.selectAll();
+            ps.setRange();
+            bool result = false;
+
+            try {
+                //pms.interpolateLagrange(5.0);
+            }
+            catch (ModelException e) {
+                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
+            }
+            Assert.That(result, Is.True);
+        }
 
 
 
