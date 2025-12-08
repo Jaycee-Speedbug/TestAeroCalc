@@ -85,13 +85,48 @@ namespace TestAeroCalc
         }
 
 
-
         /// <summary>
-        /// Test de la régression polynomiale
+        /// Test de la régression polynomiale sur un système vide
         /// </summary>
         [Test]
-        public void interpolate_2() {
+        public void interpolate_1()
+        {
+            PerfSerie ps = new PerfSerie();
+            // Test de la régression polynomiale
+            PerformanceModelSolver pms = new PerformanceModelSolver(ps);
+            bool result = false;
+            try {
+                pms.interpolateLagrange(5.0);
+            }
+            catch (ModelException e) {
+                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
+            }
+            Assert.That(result, Is.True);
+        }
 
+
+        /// <summary>
+        /// Test de la régression polynomiale sur un système à deux points
+        /// </summary>
+        [Test]
+        public void interpolate_3()
+        {
+            PerfSerie ps = new PerfSerie();
+            ps.add(new PerfPoint(1, 3, false));
+            ps.add(new PerfPoint(4, 15, false));
+            PerformanceModelSolver pms = new PerformanceModelSolver(ps);
+            double expected = 3 + (15 - 3) / (4 - 1) * (2 - 1); // 7
+            Assert.That(pms.interpolateLagrange(2), Is.EqualTo(expected));
+        }
+
+
+
+        /// <summary>
+        /// Test de la régression polynomiale sur une série viable
+        /// </summary>
+        [Test]
+        public void interpolate_2()
+        {
             // Série basée sur le polynome : 0.5 . x^2 + x - 1
             PerfSerie ps = new PerfSerie();
             ps.add(new PerfPoint(3, 0.5 * Math.Pow(3, 2) + (3) - 1, false));

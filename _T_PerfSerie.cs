@@ -35,7 +35,7 @@ namespace TestAeroCalc
             Assert.That(3, Is.EqualTo(psClone.count));
 
             for (int count = 0; count < ps.count; count++) {
-                Assert.That(ps.pointAt(count).factorValue, Is.EqualTo(psClone.pointAt(count).factorValue));
+                Assert.That(ps.pointAt(count).input, Is.EqualTo(psClone.pointAt(count).input));
             }
         }
 
@@ -64,11 +64,11 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(-1, 15, false));
             ps.add(new PerfPoint(8, 6, false));
 
-            Assert.That(-5, Is.EqualTo(ps.pointAt(0).factorValue));
-            Assert.That(-1, Is.EqualTo(ps.pointAt(1).factorValue));
-            Assert.That(1, Is.EqualTo(ps.pointAt(2).factorValue));
-            Assert.That(3, Is.EqualTo(ps.pointAt(3).factorValue));
-            Assert.That(8, Is.EqualTo(ps.pointAt(4).factorValue));
+            Assert.That(-5, Is.EqualTo(ps.pointAt(0).input));
+            Assert.That(-1, Is.EqualTo(ps.pointAt(1).input));
+            Assert.That(1, Is.EqualTo(ps.pointAt(2).input));
+            Assert.That(3, Is.EqualTo(ps.pointAt(3).input));
+            Assert.That(8, Is.EqualTo(ps.pointAt(4).input));
         }
 
 

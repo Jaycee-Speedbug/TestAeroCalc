@@ -34,8 +34,8 @@ namespace TestAeroCalc
             Assert.That(pl.count, Is.EqualTo(2));
             Assert.That(pl.SerieAt(0).count, Is.EqualTo(3));
             Assert.That(pl.SerieAt(1).count, Is.EqualTo(4));
-            Assert.That(pl.SerieAt(0).pointAt(1).factorValue, Is.EqualTo(-4));
-            Assert.That(pl.SerieAt(1).pointAt(2).factorValue, Is.EqualTo(-1));
+            Assert.That(pl.SerieAt(0).pointAt(1).input, Is.EqualTo(-4));
+            Assert.That(pl.SerieAt(1).pointAt(2).input, Is.EqualTo(-1));
             Assert.That(pl.count, Is.EqualTo(5));
         }
 
