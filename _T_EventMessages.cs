@@ -1,6 +1,5 @@
-using NUnit.Framework;
 using AeroCalcCore;
-using System;
+using NUnit.Framework;
 
 namespace TestAeroCalc
 {

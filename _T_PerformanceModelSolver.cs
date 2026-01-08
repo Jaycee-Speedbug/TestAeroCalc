@@ -1,6 +1,5 @@
-﻿using System;
+﻿using AeroCalcCore;
 using NUnit.Framework;
-using AeroCalcCore;
 
 
 
@@ -12,7 +11,8 @@ namespace TestAeroCalc
     {
 
         [SetUp]
-        public void SetUp() {
+        public void SetUp()
+        {
             //ps = new PerfSerie();
             //pms = new PerformanceModelSolver(ps);
         }
@@ -62,14 +62,14 @@ namespace TestAeroCalc
         [Test]
         public void orderedIndexesByDistance_1()
         {
-            
+
             PerfSerie ps2 = new PerfSerie();
             ps2.add(new PerfPoint(3, 0.5 * Math.Pow(3, 2) + (3) - 1, false));
             ps2.add(new PerfPoint(1, 0.5 * Math.Pow(1, 2) + (1) - 1, false));
             ps2.add(new PerfPoint(-5, 0.5 * Math.Pow(-5, 2) + (-5) - 1, false));
             ps2.add(new PerfPoint(-2, 0.5 * Math.Pow(-2, 2) + (-2) - 1, false));
             ps2.add(new PerfPoint(8, 0.5 * Math.Pow(8, 2) + (8) - 1, false));
-            
+
             // Abscisses des points (triés) de la série : -5, -2, 1, 3, 8
             // On teste la recherche des points les plus proches de -1.0
 
@@ -95,10 +95,12 @@ namespace TestAeroCalc
             // Test de la régression polynomiale
             PerformanceModelSolver pms = new PerformanceModelSolver(ps);
             bool result = false;
-            try {
+            try
+            {
                 pms.interpolateLagrange(5.0);
             }
-            catch (ModelException e) {
+            catch (ModelException e)
+            {
                 result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
             }
             Assert.That(result, Is.True);

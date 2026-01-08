@@ -1,8 +1,4 @@
-using System;
-using System.IO;
 using NUnit.Framework;
-using AeroCalcCore;
-using System.Collections.Generic;
 
 
 // TODO Test à revoir complètement, CSVFile est une classe abstraite et getLineIndex est inaccessible !

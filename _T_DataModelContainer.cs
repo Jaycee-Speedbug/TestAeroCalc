@@ -1,8 +1,5 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using NUnit.Framework;
 using AeroCalcCore;
+using NUnit.Framework;
 
 namespace TestAeroCalc
 {
@@ -13,12 +10,14 @@ namespace TestAeroCalc
         private DataModelContainer dataModels = null!;
 
         [SetUp]
-        public void SetUp() {
+        public void SetUp()
+        {
 
         }
 
         [Test]
-        public void expendFilter_1() {
+        public void expendFilter_1()
+        {
 
             dataModels = new DataModelContainer();
 
@@ -26,7 +25,8 @@ namespace TestAeroCalc
             string[] returnTable = dataModels._A_expendFilter(filter1, 4);
             Assert.That(returnTable.Length, Is.EqualTo(filter1.Length));
 
-            for (int count = 0; count < 4; count++) {
+            for (int count = 0; count < 4; count++)
+            {
                 // TODO à revoir complètement
                 // Assert.That(returnTable, Is.Null);
             }
@@ -57,7 +57,8 @@ namespace TestAeroCalc
         }
 
         [Test]
-        public void test_compute() {
+        public void test_compute()
+        {
 
             dataModels = new DataModelContainer();
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AeroCalcCore;
+﻿using AeroCalcCore;
 
 
 
@@ -15,7 +12,8 @@ namespace TestAeroCalc
     public class _A_CSVFile : CSVFile
     {
 
-        public _A_CSVFile() : base() {
+        public _A_CSVFile() : base()
+        {
 
         }
     }
