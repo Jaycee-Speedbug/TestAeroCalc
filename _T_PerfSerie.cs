@@ -1,4 +1,5 @@
 ﻿using AeroCalcCore;
+using AeroCalcCore.FlightPerformanceEngine;
 using NUnit.Framework;
 
 
@@ -61,7 +62,6 @@ namespace TestAeroCalc
             Assert.That(sub.Length, Is.EqualTo(2));
             Assert.That(sub, Is.EqualTo(new[] { 5, 6 }));
 
-
         }
 
 
@@ -119,28 +119,6 @@ namespace TestAeroCalc
         }
 
 
-        // Test du comptage des PerfPoints sélectionnés
-        [Test]
-        public void selectedCount_1()
-        {
-
-            PerfSerie ps = new PerfSerie();
-            PerfPoint pp1 = new PerfPoint(1, 5, true);
-            PerfPoint pp2 = new PerfPoint(-5, 1, true);
-            PerfPoint pp3 = new PerfPoint(-1, 15, false);
-            PerfPoint pp4 = new PerfPoint(8, 6, false);
-            PerfPoint pp5 = new PerfPoint(3, 10, false);
-            ps.add(pp1);
-            ps.add(pp2);
-            ps.add(pp3);
-            ps.add(pp4);
-            ps.add(pp5);
-            //pp3.selected = true;
-            //pp4.selected = true;
-
-            //Assert.That(2, Is.EqualTo(ps.selectedCount()));
-        }
-
 
         // Test de la fonction renvoyant l'index d'un point de performance
         [Test]
@@ -164,37 +142,6 @@ namespace TestAeroCalc
         }
 
 
-        /*
-        // Test de la fonction renvoyant l'index du point de plus grande proximité
-        [Test]
-        public void Test_closestPointIndex2_1() {
-
-            for (int count = 0; count < 10000; count++) {
-                PerfSerie ps1 = new PerfSerie();
-                ps1.add(new PerfPoint(-12, 10, false));
-                ps1.add(new PerfPoint(-9, 5, true));
-                ps1.add(new PerfPoint(-8, 5, true));
-                ps1.add(new PerfPoint(-5, -1, false));
-                ps1.add(new PerfPoint(-1, -1, false));
-                ps1.add(new PerfPoint(0, 1, false));
-                ps1.add(new PerfPoint(1, 1, false));
-                ps1.add(new PerfPoint(3, 0, false));
-                ps1.add(new PerfPoint(7, 3, false));
-                ps1.add(new PerfPoint(11, 0, false));
-                ps1.add(new PerfPoint(15, 9, false));
-                ps1.add(new PerfPoint(32, 41, false));
-
-                Assert.AreEqual(0, ps1.closestPointIndex(-13));
-                Assert.AreEqual(2, ps1.closestPointIndex(-7.5));
-                Assert.AreEqual(5, ps1.closestPointIndex(0.4999));
-                Assert.AreEqual(6, ps1.closestPointIndex(1));
-                Assert.AreEqual(8, ps1.closestPointIndex(7.1));
-                Assert.AreEqual(10, ps1.closestPointIndex(16));
-                Assert.AreEqual(11, ps1.closestPointIndex(33));
-            }
-
-        }
-        */
 
 
         /*
@@ -308,7 +255,7 @@ namespace TestAeroCalc
             }
             Assert.That(result, Is.True);
 
-            // Interpolation linéaire quand il n'pp2 a que deux points de performance
+            // Interpolation linéaire quand il n'y a que deux points de performance
             Assert.That(2.5, Is.EqualTo(ps.predict(-7)));
 
             ps.add(new PerfPoint(1, (1 / 8) * Math.Pow(1, 2) + (1) + 3, false));
@@ -316,7 +263,7 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(8, (1 / 8) * Math.Pow(8, 2) + (8) + 3, false));
             ps.setRange();
 
-            // Test de la prédiction de niveau 2 (polynôme ² avec 3 points de performance)
+            // Test de la prédiction de niveau 2 (polynôme de second degrès avec 3 points de performance)
             Assert.That(isWithinPrecision((double)ps.predict(5),
                                          (1 / 8) * Math.Pow(5, 2) + (5) + 3,
                                          0.0000001), Is.True);

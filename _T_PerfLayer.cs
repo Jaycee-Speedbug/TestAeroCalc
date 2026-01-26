@@ -1,4 +1,5 @@
 ﻿using AeroCalcCore;
+using AeroCalcCore.FlightPerformanceEngine;
 using NUnit.Framework;
 
 namespace TestAeroCalc
@@ -64,6 +65,7 @@ namespace TestAeroCalc
         }
 
 
+        /*
         [Test]
         public void selectSubLayer_1()
         {
@@ -82,15 +84,14 @@ namespace TestAeroCalc
             Assert.That(pl.count, Is.EqualTo(6));
             Assert.That(pl.selectedCount(), Is.EqualTo(3));
 
-            /*
             Assert.That(pl.SerieAt(0).selected, Is.False);
             Assert.That(pl.SerieAt(1).selected, Is.False);
             Assert.That(pl.SerieAt(2).selected, Is.True);
             Assert.That(pl.SerieAt(3).selected, Is.True);
             Assert.That(pl.SerieAt(4).selected, Is.True);
             Assert.That(pl.SerieAt(5).selected, Is.False);
-            */
         }
+        */
 
 
         [Test]

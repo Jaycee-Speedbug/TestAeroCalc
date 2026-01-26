@@ -1,4 +1,5 @@
 ﻿using AeroCalcCore;
+using AeroCalcCore.FlightPerformanceEngine;
 using NUnit.Framework;
 
 
