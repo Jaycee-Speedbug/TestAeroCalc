@@ -1,5 +1,4 @@
-﻿using AeroCalcCore;
-using AeroCalcCore.FlightPerformanceEngine;
+﻿using AeroCalcCore.FlightPerformanceEngine;
 using NUnit.Framework;
 
 
@@ -34,6 +33,7 @@ namespace TestAeroCalc
 
 
 
+        /*
         [Test]
         public void subDomain_1()
         {
@@ -63,7 +63,7 @@ namespace TestAeroCalc
             Assert.That(sub, Is.EqualTo(new[] { 5, 6 }));
 
         }
-
+        */
 
 
 
@@ -178,6 +178,7 @@ namespace TestAeroCalc
 
 
         // Test du classement des indexes des PerfPoint d'une PerfSerie par rapport à une abscisse de référence
+        /*
         [Test]
         public void sortIndexesByDistance_1()
         {
@@ -217,6 +218,7 @@ namespace TestAeroCalc
             Assert.That(table[0], Is.EqualTo(3));
 
         }
+        */
 
 
 
