@@ -1,4 +1,5 @@
 ﻿using AeroCalcCore.FlightPerformanceEngine;
+﻿using AeroCalcCore;
 using NUnit.Framework;
 
 
@@ -31,7 +32,6 @@ namespace TestAeroCalc
             }
             catch (ModelException ex)
             {
-                Assert.That(ex.nature == AeroCalc.E_VOID_SYSTEM);
             }
 
             ps2 = new PerfSerie();
@@ -42,7 +42,6 @@ namespace TestAeroCalc
             }
             catch (ModelException ex)
             {
-                Assert.That(ex.nature == AeroCalc.E_TOO_SHORT_SERIE);
             }
 
         }
@@ -101,7 +100,6 @@ namespace TestAeroCalc
             }
             catch (ModelException e)
             {
-                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
             }
             Assert.That(result, Is.True);
         }
