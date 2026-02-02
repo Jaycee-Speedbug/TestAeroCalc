@@ -1,4 +1,4 @@
-﻿using AeroCalcCore;
+﻿using AeroCalcCore.FlightPerformanceEngine;
 using NUnit.Framework;
 
 
@@ -31,7 +31,7 @@ namespace TestAeroCalc
             }
             catch (ModelException ex)
             {
-                Assert.That(ex.nature == EngineErrorCodes.E_VOID_SYSTEM);
+                Assert.That(ex.nature == EngineErrorCodes.VOID_SYSTEM);
             }
 
             ps2 = new PerfSerie();
@@ -42,7 +42,7 @@ namespace TestAeroCalc
             }
             catch (ModelException ex)
             {
-                Assert.That(ex.nature == EngineErrorCodes.E_TOO_SHORT_SERIE);
+                Assert.That(ex.nature == EngineErrorCodes.SYSTEM_BELOW_MIN_SIZE);
             }
 
         }
@@ -86,24 +86,51 @@ namespace TestAeroCalc
 
 
         /// <summary>
-        /// Test de la régression polynomiale sur un système vide
+        /// Test of PerformanceModelSolver constructor with various edge cases.
         /// </summary>
         [Test]
         public void interpolate_1()
         {
-            PerfSerie ps = new PerfSerie();
-            // Test de la régression polynomiale
-            PerformanceModelSolver pms = new PerformanceModelSolver(ps);
-            bool result = false;
-            try
+            // Test of a null PerfSerie
+            PerfSerie ps1 = null;
+            try 
             {
-                pms.interpolateLagrange(5.0);
+                PerformanceModelSolver pms1 = new(ps1);
             }
             catch (ModelException e)
             {
-                result = (e.nature == EngineErrorCodes.E_VOID_SYSTEM ? true : false);
+                Assert.That(e.nature == EngineErrorCodes.VOID_SYSTEM);
             }
-            Assert.That(result, Is.True);
+
+
+            // Test of an empty PerfSerie
+            PerfSerie ps2 = new ();
+            var result2 = false;
+            try
+            {
+                PerformanceModelSolver pms2 = new(ps2);
+            }
+            catch (ModelException e)
+            {
+                result2 = (e.nature == EngineErrorCodes.SYSTEM_BELOW_MIN_SIZE ? true : false);
+            }
+            Assert.That(result2, Is.True);
+
+
+            // Test of a PerfSerie with a single point
+            PerfSerie ps3 = new ();
+            ps3.add(new PerfPoint(1, 3, false));
+            // Check that the series contains exactly one point
+            Assert.That(ps3.count, Is.EqualTo(1));
+            var result3 = false;
+            try
+            {
+                PerformanceModelSolver pms3 = new(ps3);
+            }
+            catch (ModelException e)
+            {
+                result3 = (e.nature == EngineErrorCodes.SYSTEM_BELOW_MIN_SIZE ? true : false);
+            }
         }
 
 
@@ -118,7 +145,7 @@ namespace TestAeroCalc
             ps.add(new PerfPoint(4, 15, false));
             PerformanceModelSolver pms = new PerformanceModelSolver(ps);
             double expected = 3 + (15 - 3) / (4 - 1) * (2 - 1); // 7
-            Assert.That(pms.interpolateLagrange(2), Is.EqualTo(expected));
+            Assert.That(pms.InterpolateLagrange(2), Is.EqualTo(expected));
         }
 
 
@@ -142,7 +169,7 @@ namespace TestAeroCalc
             PerformanceModelSolver pms = new PerformanceModelSolver(ps);
             double expected = 0.5 * Math.Pow(5, 2) + (5) - 1; // 16.5
 
-            Assert.That(pms.interpolateLagrange(5), Is.EqualTo(expected));
+            Assert.That(pms.InterpolateLagrange(5), Is.EqualTo(expected));
         }
 
     }
@@ -177,15 +204,15 @@ public void Test_PI_pointsOfInterest_1() {
             PerfSerie ps = new PerfSerie();
             ps.selectAll();
             ps.setRange();
-            bool result = false;
+            bool result2 = false;
 
             try {
-                //pms.interpolateLagrange(5.0);
+                //pms.InterpolateLagrange(5.0);
             }
             catch (ModelException e) {
-                result = (e.nature == AeroCalc.E_VOID_SYSTEM ? true : false);
+                result2 = (e.nature == AeroCalc.VOID_SYSTEM ? true : false);
             }
-            Assert.That(result, Is.True);
+            Assert.That(result2, Is.True);
         }
 
 
